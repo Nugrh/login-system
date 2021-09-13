@@ -2,6 +2,12 @@
 
 session_start();
 
+$localhost = "localhost";
+$username = "root";
+$password = "";
+$db = "phpdasar";
+
+$conn = mysqli_connect($localhost, $username, $password, $db);
 
 
 if (!isset($_SESSION["login"])){
