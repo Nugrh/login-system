@@ -9,14 +9,10 @@ $db = "phpdasar";
 
 $conn = mysqli_connect($localhost, $username, $password, $db);
 
-
 if (!isset($_SESSION["login"])){
     header("Location: login.php");
     exit;
 }
-
-
-
 
 ?>
 
