@@ -1,5 +1,13 @@
 <?php
 
+session_start();
+
+if (isset($_SESSION["login"])){
+    header("Location: index.php");
+    exit;
+}
+
+
 require 'function.php';
 global $conn;
 
@@ -7,8 +15,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+
+
 
 $sql = "SELECT * FROM `users`";
 $result = mysqli_query($conn, $sql);
@@ -16,29 +24,30 @@ $row = mysqli_fetch_assoc($result);
 
 $hash = $row['password'];
 
-
 if (isset($_POST["submit"])){
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
     if (mysqli_num_rows($result)){
 
-//        var_dump($row['email']);
-//        var_dump($email);
-
         if ($row["email"] == $email && password_verify($password, $hash)){
+
             header("Location: index.php");
+            $_SESSION["login"] = true;
+
+            die();
         } else{
             echo "Email or password not found! please try again";
         }
     } else {
         echo "nothing";
     }
+
+
+} else {
+    echo mysqli_error($conn);
 }
-
-
-
-
-//if ( $email == $query ){
-//    echo "jdada";
-//}
 
 
 ?>
